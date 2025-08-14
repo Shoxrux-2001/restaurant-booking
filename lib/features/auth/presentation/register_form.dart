@@ -3,13 +3,14 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:restaurant_booking/services/auth_service.dart';
 
-class LoginForm extends StatelessWidget {
+class RegisterForm extends StatelessWidget {
   final VoidCallback onSwitch;
 
-  const LoginForm({Key? key, required this.onSwitch}) : super(key: key);
+  const RegisterForm({Key? key, required this.onSwitch}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController nameController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
     final AuthService _authService = AuthService();
@@ -20,6 +21,32 @@ class LoginForm extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const Text(
+              'Full Name',
+              style: TextStyle(color: Colors.grey, fontSize: 14),
+            ),
+            const SizedBox(height: 8),
+            TextField(
+              controller: nameController,
+              decoration: InputDecoration(
+                hintText: '',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(color: Colors.grey, width: 1),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(color: Colors.grey, width: 1),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(color: Colors.grey, width: 1),
+                ),
+                filled: true,
+                fillColor: Colors.grey[200],
+              ),
+            ),
+            const SizedBox(height: 16),
             const Text(
               'Email Address',
               style: TextStyle(color: Colors.grey, fontSize: 14),
@@ -72,38 +99,29 @@ class LoginForm extends StatelessWidget {
                 fillColor: Colors.grey[200],
               ),
             ),
-            const SizedBox(height: 10),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'Forgot Password?',
-                  style: TextStyle(color: Colors.green),
-                ),
-              ),
-            ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                if (emailController.text.isNotEmpty &&
+                if (nameController.text.isNotEmpty &&
+                    emailController.text.isNotEmpty &&
                     passwordController.text.isNotEmpty) {
                   try {
-                    await _authService.signInUserWithEmailAndPassword(
+                    await _authService.signUpUserWithEmailAndPassword(
                       email: emailController.text.trim(),
                       password: passwordController.text.trim(),
                     );
+                    Navigator.pop(context);
                     context.go('/home');
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Login failed: ${e.toString()}')),
+                      SnackBar(
+                        content: Text('Register failed: ${e.toString()}'),
+                      ),
                     );
                   }
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Please enter email and password'),
-                    ),
+                    const SnackBar(content: Text('Please fill all fields')),
                   );
                 }
               },
@@ -115,7 +133,7 @@ class LoginForm extends StatelessWidget {
                 ),
               ),
               child: const Text(
-                'Login',
+                'Register',
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
@@ -124,7 +142,7 @@ class LoginForm extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton.icon(
               icon: SvgPicture.asset('assets/svgs/google.svg', height: 24),
-              label: const Text('Login with Google'),
+              label: const Text('Sign up with Google'),
               onPressed: () async {
                 try {
                   await _authService.googleAuthenticate();

@@ -1,4 +1,4 @@
-import '../../domain/entities/onboarding_entity.dart';
+import 'package:restaurant_booking/features/onboarding/domain/entities/onboarding_entity.dart';
 
 class OnboardingModel extends OnboardingEntity {
   OnboardingModel({

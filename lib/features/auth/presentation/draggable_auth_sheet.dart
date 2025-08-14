@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_booking/features/auth/presentation/register_screen.dart';
 import 'login_form.dart';
+import 'register_form.dart';
 
 void showDraggableAuthSheet(BuildContext context, {int initialPage = 0}) {
   showModalBottomSheet(
@@ -36,19 +36,18 @@ class AuthSheetContent extends StatefulWidget {
 }
 
 class _AuthSheetContentState extends State<AuthSheetContent> {
-  final PageController _pageController = PageController(
-    initialPage: 0,
-  ); // Initial page belgilash
+  final PageController _pageController = PageController(initialPage: 0);
+  int _currentPage = 0;
 
   @override
   void initState() {
     super.initState();
-    // jumpToPage ni olib tashladik, chunki initialPage PageController da belgilandi
+    _currentPage = widget.initialPage;
   }
 
   @override
   void dispose() {
-    _pageController.dispose(); // Resource larini tozalash
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -70,11 +69,73 @@ class _AuthSheetContentState extends State<AuthSheetContent> {
               borderRadius: BorderRadius.circular(5),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () => _pageController.animateToPage(
+                    0,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Login',
+                        style: TextStyle(
+                          color: _currentPage == 0 ? Colors.green : Colors.grey,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Container(
+                        height: 2,
+                        width: 40,
+                        color: _currentPage == 0
+                            ? Colors.green
+                            : Colors.transparent,
+                      ),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => _pageController.animateToPage(
+                    1,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Create Account',
+                        style: TextStyle(
+                          color: _currentPage == 1 ? Colors.green : Colors.grey,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Container(
+                        height: 2,
+                        width: 40,
+                        color: _currentPage == 1
+                            ? Colors.green
+                            : Colors.transparent,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
           Expanded(
             child: PageView(
               controller: _pageController,
               onPageChanged: (index) {
-                setState(() {}); // Page o'zgarganda UI ni yangilash
+                setState(() {
+                  _currentPage = index;
+                });
               },
               children: [
                 LoginForm(

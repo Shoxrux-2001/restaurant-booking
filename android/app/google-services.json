@@ -12,7 +12,20 @@
           "package_name": "com.example.restaurant_booking"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "440252030864-hda0kctjap1d75rf60vnalt6adscohq7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.restaurant_booking",
+            "certificate_hash": "eea331d6e61aa235a1bd8c3a8c7a42921829b99d"
+          }
+        },
+        {
+          "client_id": "440252030864-nq62573m7hlf8beekjgrpup2ueim3gji.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAjR3U_jBBccMmf7f32xhF0GBAj6LlS7Tk"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "440252030864-nq62573m7hlf8beekjgrpup2ueim3gji.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "440252030864-7o7g1tulfl5j5anggpjgscqs5se9cusl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.restaurantBooking"
+              }
+            }
+          ]
         }
       }
     }
